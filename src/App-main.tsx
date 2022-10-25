@@ -1,30 +1,17 @@
 import React from 'react';
+import JsonInput from './cmps/Json-input';
+import TypeScriptOutput from './cmps/Typescript-output';
+
 
 function AppMain() {
-    return (
-      <div className="App-main">
-        <header className="App-header">
+  return (
+    <div className="App-main">
 
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-  
-        <body className='App-body'>
-          export          
-        </body>
-  
-      </div>
-    );
-  }
-  
-  export default AppMain;
-  
+        <JsonInput />
+        <TypeScriptOutput />
+
+    </div>
+  );
+}
+
+export default AppMain;
