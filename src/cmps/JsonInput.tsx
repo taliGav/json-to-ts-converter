@@ -1,17 +1,18 @@
 import React from 'react';
 
-
-
-
-
 function JsonInput() {
     return (
-        <div className="Json-input-container">
+        <div className="Json-input-container"
+            style={{
+                display: "inline-flexbox",
+                backgroundColor: "blueviolet",
+                maxWidth: "40%"
+            }}>
+
             JSON input main container
 
             <form action="" method="post">
                 JSON input form container
-
 
                 {/* <textarea name="Json-input-text" id="" cols="30" rows="10"></textarea> */}
 
