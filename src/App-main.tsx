@@ -5,12 +5,18 @@ import TypeScriptOutput from './cmps/Typescript-output';
 
 function AppMain() {
   return (
-    <div className="App-main">
+    <div className="App-main"
+      style={{
+        display: "inline-flexbox",
+        flexDirection: "column",
+        justifyContent: "center"
+      }}
+    >
 
-        <JsonInput />
-        <TypeScriptOutput />
+      <JsonInput />
+      <TypeScriptOutput />
 
-    </div>
+    </div >
   );
 }
 
