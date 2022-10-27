@@ -3,7 +3,7 @@ export {
     tsInterfaceOutput
 }
 
-var x =
+const x =
 {
     "id": 0,
     "name": "Blanche Mathews",
@@ -12,7 +12,7 @@ var x =
 }
 
 
-// var x = [
+// const x = [
 //     {
 //         "id": 0,
 //         "name": "Blanche Mathews",
@@ -34,9 +34,9 @@ var x =
 
 // console.log(...x);
 
-// var y = JSON.stringify(...x,)
+// const y = JSON.stringify(...x,)
 
-// var y = JSON.stringify(x).split(",")
+// const y = JSON.stringify(x).split(",")
 
 
 function typesOfValues(x) {
@@ -44,19 +44,9 @@ function typesOfValues(x) {
 }
 
 function tsInterfaceOutput(x) {
-    var keys = Object.keys(x)
-    var types = typesOfValues(x)
-    
-    let entArrs = []
-    for (let i = 0; i < keys.length; i++) {
-        let arr = []
-        arr[0] = keys[i];
-        arr[1] = types[i]
+    const valuesMappedToTypesEntries = Object.entries(x).map(([key, val]) => {
+        return [key, typeof val]
+    })
 
-        entArrs.push(arr)
-    }
-
-    let entries = new Map(entArrs)
-
-    return Object.fromEntries(entries)
+    return Object.fromEntries(valuesMappedToTypesEntries)
 }
