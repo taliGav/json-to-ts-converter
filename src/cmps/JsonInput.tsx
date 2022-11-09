@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { MutableRefObject, useRef, useState } from 'react';
 
-function JsonInput() {
+function JsonInput(props: { onSubmit: (jsonInput: string) => void }) {
+    const jsonInput = useRef('')
+
     return (
         <div className="Json-input-container"
             style={{
                 display: "inline-flexbox",
                 backgroundColor: "blueviolet",
-                maxWidth: "40%"
+                maxWidth: "100vw"
             }}>
-
-            JSON input main container
-
-            <form action="" method="post">
-                JSON input form container
-
-                {/* <textarea name="Json-input-text" id="" cols="30" rows="10"></textarea> */}
-
-                <br />
-                <input type="submit" value="Convert to TS" />
-            </form>
-
-        </div>
+            <h1>
+                JSON input
+            </h1>
+            <br />
+            <input type="textarea" name="Json-input-text" id=""
+                style={{
+                    minWidth: "250px",
+                    minHeight: "100px",
+                }}
+                placeholder='Enter your JSON here'
+                onChange={(e) => jsonInput.current = e.target.value} />
+            <br />
+            <br />
+            <button
+                onClick={(e) => {props.onSubmit(jsonInput.current)}}
+            >Convert JSON to TS</button>
+            <br />
+            {jsonInput.current}
+            <br />
+            {typeof (jsonInput.current)}
+        </div >
     );
 }
 
