@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import AppMain from './AppMain';
+import JsonInput from './cmps/JsonInput';
+import TypeScriptOutput from './cmps/TypescriptOutput';
 
 
 function App() {
+
+  const [input, setinput] = useState('') 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn ts
-        </a>
-      </header>
+    <div className="App"
+      style={{
+        backgroundColor: "yellow",
+        minHeight: "90vh",
+        display: "inline-flexbox",
+        flexDirection: "column",
+        justifyContent: "center"
+      }}
+    >
 
-      <AppMain />
+      <JsonInput onSubmit={(x: string) => setinput(x)} />
 
-    </div>
+      <TypeScriptOutput updatedJsonInput={input} />
+
+    </div >
   );
+
 }
 
 export default App;
