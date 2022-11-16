@@ -1,44 +1,12 @@
-import React from 'react';
-
-function jsonValueToTypescriptType(val: unknown) {
-    switch (typeof val) {
-        case 'number':
-            return 'number'
-        case 'string':
-            return 'string'
-        case 'boolean':
-            return 'boolean';
-        case null:
-            return 'null'
-        case undefined:
-            return 'undefined'
-    }
-}
-
-function jsonObjectToTypescript(json: Record<string, unknown>): string {
-
-    console.log(Object.entries(json))
-    const str = Object.entries(json).reduce((keyValTypeStr, cur) => {
-        console.log("keyValTypeStr", keyValTypeStr)
-        console.log("cur", cur)
-
-        return keyValTypeStr + `${cur[0]}:${jsonValueToTypescriptType(cur[1])}\n`
-
-    }, '')
-    return `Interface T{
-            ${str}}   
-            `
-}
-
-function jsonInputToTypescriptOutput(input: string) {
-    const parsedJson = JSON.parse(input)
-    return jsonObjectToTypescript(parsedJson)
+export {
+    jsonObjectToTypescriptInterface,
+    jsonToTypescript
 }
 
 
-function TypeScriptOutput(props: { updatedJsonInput: string }) {
+function TypeScriptOutput(props: { mainInterfaceName: string, updatedJsonInput: string }) {
 
-    if (props.updatedJsonInput) {
+    if (props.mainInterfaceName && props.updatedJsonInput) {
 
         return (
             <div className="Ts-output-container"
@@ -56,8 +24,7 @@ function TypeScriptOutput(props: { updatedJsonInput: string }) {
 
                 >
                     <p style={{ whiteSpace: 'pre-line', textAlign: 'left' }}>
-                        {jsonInputToTypescriptOutput(props.updatedJsonInput)}
-                        {/* {JSON.stringify(tsInterfaceOutput(props.updatedJsonInput))} */}
+                        {jsonToTypescript(props.mainInterfaceName, props.updatedJsonInput)}
                     </p>
                 </div>
             </div>
@@ -72,37 +39,71 @@ function TypeScriptOutput(props: { updatedJsonInput: string }) {
     )
 }
 
+export default TypeScriptOutput;
 
-function tsInterfaceOutput(x: string) {
-    const parsedInput = JSON.parse(x)
-    const valuesMappedToTypesEntries = Object.entries(parsedInput).map(([key, val]) => {
-        return [key, typeof val]
-    })
 
-    // console.log("valuesMappedToTypesEntries:" , valuesMappedToTypesEntries)
-    // console.log("Object.fromEntries:" , Object.fromEntries(valuesMappedToTypesEntries))
-    // // return [new String(key), typeof val]
-    // console.log("JSON.stringify:" , JSON.stringify(Object.fromEntries(valuesMappedToTypesEntries)))
 
-    const objWithTypes: {} = Object.fromEntries(valuesMappedToTypesEntries)
 
-    return objWithTypes
-    // return <p>interface T{ `${objWithTypes}`}</p>
+function jsonToTypescript(mainInterfaceName: string, input: string) {
+    const parsedJson = JSON.parse(input)
+    return jsonObjectToTypescriptInterface(mainInterfaceName, parsedJson)
 }
 
-// function tsInterfaceOutput(x: string) {
-//     const parsedInput = JSON.parse(x)
-//     const valuesMappedToTypesEntries = Object.entries(parsedInput).map(([key, val]) => {
-//         return [key, typeof val]
-//     })
-
-//     // console.log("valuesMappedToTypesEntries:" , valuesMappedToTypesEntries)
-//     // console.log("Object.fromEntries:" , Object.fromEntries(valuesMappedToTypesEntries))
-//     // // return [new String(key), typeof val]
-//     // console.log("JSON.stringify:" , JSON.stringify(Object.fromEntries(valuesMappedToTypesEntries)))
-
-//     return Object.fromEntries(valuesMappedToTypesEntries)
-// }
 
 
-export default TypeScriptOutput;
+function jsonObjectToTypescriptInterface(interfaceName: string, json: Record<string, unknown>): string {
+
+    const interfaces = [] as string[]
+    const rec = Object.entries(json).map(([key, val]) => {
+        if (isRecord(val)) {
+            return [key, val] as const
+        }
+        return [key, primitiveValueToTypescriptType(val)] as const
+    })
+
+    const str = `interface ${toPascalCase(interfaceName)} {
+        ${rec.reduce((_interface, [property, valType]) => {
+        if (isRecord(valType)) {
+            interfaces.push(jsonObjectToTypescriptInterface(property, valType))
+            return _interface + `${property}: ${toPascalCase(property)}\n`
+        }
+        return _interface + `${property}: ${valType}\n`
+    }, '')
+        }}\n`
+
+        console.log('str', str)
+        console.log('interfaces', interfaces)
+
+    return str + '\n' + interfaces.join('')
+}
+
+
+
+
+function isRecord(x: unknown): x is Record<string, unknown> {
+    return x !== null && typeof x === 'object' && !Array.isArray(x);
+}
+
+
+
+function primitiveValueToTypescriptType(val: unknown) {
+    switch (typeof val) {
+        case 'number':
+            return 'number'
+        case 'string':
+            return 'string'
+        case 'boolean':
+            return 'boolean';
+        case null:
+            return 'null'
+        case undefined:
+            return 'undefined'
+    }
+}
+
+
+
+function toPascalCase(name: string) {
+    return name.split(' ').reduce((acc, cur) => acc + cur.charAt(0).toUpperCase() + cur.slice(1).toLowerCase(), '')
+}
+
