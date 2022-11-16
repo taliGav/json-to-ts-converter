@@ -1,6 +1,12 @@
 import React, { MutableRefObject, useRef, useState } from 'react';
 
-function JsonInput(props: { onSubmit: (jsonInput: string) => void }) {
+function JsonInput(props: {
+    onSubmit: {
+        (interfaceName: string, jsonInput: string): void
+    }
+}) {
+
+    const interfaceName = useRef('')
     const jsonInput = useRef('')
 
     return (
@@ -14,6 +20,13 @@ function JsonInput(props: { onSubmit: (jsonInput: string) => void }) {
                 JSON input
             </h1>
             <br />
+            <input type="text" name="interface-name" required
+                style={{
+                    minWidth: "250px",
+                }}
+                placeholder='Enter your interface name'
+                onChange={(e) => interfaceName.current = e.target.value} />
+            <br />
             <input type="textarea" name="Json-input-text" id=""
                 style={{
                     minWidth: "250px",
@@ -24,7 +37,7 @@ function JsonInput(props: { onSubmit: (jsonInput: string) => void }) {
             <br />
             <br />
             <button
-                onClick={(e) => {props.onSubmit(jsonInput.current)}}
+                onClick={(e) => { props.onSubmit(interfaceName.current, jsonInput.current) }}
             >Convert JSON to TS</button>
             <br />
             {jsonInput.current}
