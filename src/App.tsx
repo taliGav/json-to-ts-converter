@@ -6,6 +6,7 @@ import TypeScriptOutput from './cmps/TypescriptOutput';
 
 function App() {
 
+  const [interfaceName, setInterfaceName] = useState('') 
   const [input, setinput] = useState('') 
 
   return (
@@ -19,9 +20,11 @@ function App() {
       }}
     >
 
-      <JsonInput onSubmit={(x: string) => setinput(x)} />
+      <JsonInput onSubmit={(x: string, y:string) => {setInterfaceName(x)
+      setinput(y) 
+      }} />
 
-      <TypeScriptOutput updatedJsonInput={input} />
+      <TypeScriptOutput mainInterfaceName={interfaceName} updatedJsonInput={input} />
 
     </div >
   );
