@@ -12,11 +12,9 @@ function App() {
   return (
     <div className="App"
       style={{
-        backgroundColor: "yellow",
-        minHeight: "90vh",
-        display: "inline-flexbox",
-        flexDirection: "column",
-        justifyContent: "center"
+        backgroundColor: "#FFEFD6",
+        minHeight: "80vh",
+        display: "flex",
       }}
     >
 
