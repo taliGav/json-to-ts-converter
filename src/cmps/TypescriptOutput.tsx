@@ -12,14 +12,20 @@ function TypeScriptOutput(props: { mainInterfaceName: string, updatedJsonInput: 
             <div className="Ts-output-container"
                 style={{
                     display: "inline-flexbox",
-                    backgroundColor: "#497174",
-                    maxWidth: "100vw"
+                    backgroundColor: "#BCEAD5",
+                    maxWidth: "50vw",
+                    maxHeight: "80vh",
+                    padding: "10px",
+                    flexGrow: 1,
+                    alignSelf: "stretch"
                 }}>
-                <h1>TypeScript Output</h1>
+                <h1>TypeScript Output - input provided</h1>
                 <div
                     style={{
                         display: "inline-flexbox",
-                        backgroundColor: "#494534",
+                        backgroundColor: "#FFEFD6",
+                        marginTop: "10px",
+                        padding: "10px"
                     }}
 
                 >
@@ -32,8 +38,19 @@ function TypeScriptOutput(props: { mainInterfaceName: string, updatedJsonInput: 
     }
 
     return (
-        <div>
-            <h1>TypeScript Output</h1>
+        <div
+            style={
+                {
+                    display: "inline-flexbox",
+                    backgroundColor: "#BCEAD5",
+                    maxWidth: "50vw",
+                    maxHeight: "80vh",
+                    padding: "10px",
+                    flexGrow: 1,
+                    alignSelf: "stretch"
+                }}
+        >
+            <h1>TypeScript Output - input was not provided </h1>
             <h3>Please insert json</h3>
         </div>
     )
@@ -71,8 +88,8 @@ function jsonObjectToTypescriptInterface(interfaceName: string, json: Record<str
     }, '')
         }}\n`
 
-        console.log('str', str)
-        console.log('interfaces', interfaces)
+    console.log('str', str)
+    console.log('interfaces', interfaces)
 
     return str + '\n' + interfaces.join('')
 }
