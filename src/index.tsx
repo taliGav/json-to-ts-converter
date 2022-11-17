@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { ChakraProvider  } from "@chakra-ui/react"
 import './index.css';
+import Header from './cmps/Header';
 import App from './App';
+import Footer from './cmps/Footer';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -9,7 +12,12 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ChakraProvider >
+      <Header/>
+      <App />
+      <Footer/>
+    </ChakraProvider >
+
   </React.StrictMode>
 );
 
