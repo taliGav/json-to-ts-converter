@@ -1,5 +1,5 @@
 import { typesOfValues, tsInterfaceOutput } from './try'
-import { jsonObjectToTypescriptInterface, jsonToTypescript } from './cmps/TypescriptOutput'
+import { jsonObjectToTypescriptInterface, jsonToTypescript } from './components/TypescriptOutput'
 
 test('returns an array of types of JSON`s values', () => {
 

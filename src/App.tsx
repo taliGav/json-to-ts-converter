@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { Box } from '@chakra-ui/react';
+import { useState } from 'react';
 import './App.css';
-import JsonInput from './cmps/JsonInput';
-import TypeScriptOutput from './cmps/TypescriptOutput';
+import JsonInput from './components/JsonInput';
+import TypeScriptOutput from './components/TypescriptOutput';
 
 
 function App() {
@@ -10,13 +11,8 @@ function App() {
   const [input, setinput] = useState('') 
 
   return (
-    <div className="App"
-      style={{
-        backgroundColor: "#FFEFD6",
-        minHeight: "80vh",
-        display: "flex",
-      }}
-    >
+    <Box className="App"
+    bg="#FFEFD6" display="flex" minH='80vh'>
 
       <JsonInput onSubmit={(x: string, y:string) => {setInterfaceName(x)
       setinput(y) 
@@ -24,7 +20,7 @@ function App() {
 
       <TypeScriptOutput mainInterfaceName={interfaceName} updatedJsonInput={input} />
 
-    </div >
+    </Box >
   );
 
 }

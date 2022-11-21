@@ -1,3 +1,6 @@
+import { Box } from '@chakra-ui/react';
+
+
 export {
     jsonObjectToTypescriptInterface,
     jsonToTypescript
@@ -9,50 +12,43 @@ function TypeScriptOutput(props: { mainInterfaceName: string, updatedJsonInput: 
     if (props.mainInterfaceName && props.updatedJsonInput) {
 
         return (
-            <div className="Ts-output-container"
-                style={{
-                    display: "inline-flexbox",
-                    backgroundColor: "#BCEAD5",
-                    maxWidth: "50vw",
-                    maxHeight: "80vh",
-                    padding: "10px",
-                    flexGrow: 1,
-                    alignSelf: "stretch"
-                }}>
+            <Box
+                bg="#9ED5C5"
+                p={2.5}
+                maxW="50vw"
+                maxH="80vh"
+                flexGrow={1}
+                alignSelf="stretch"
+                className="Ts-output-container"
+            >
                 <h1>TypeScript Output - input provided</h1>
-                <div
-                    style={{
-                        display: "inline-flexbox",
-                        backgroundColor: "#FFEFD6",
-                        marginTop: "10px",
-                        padding: "10px"
-                    }}
-
+                
+                <Box
+                    bg="#FFEFD6"
+                    mt={2.5}
+                    p={2.5}
+                    borderRadius={10}
                 >
                     <p style={{ whiteSpace: 'pre-line', textAlign: 'left' }}>
                         {jsonToTypescript(props.mainInterfaceName, props.updatedJsonInput)}
                     </p>
-                </div>
-            </div>
+                </Box>
+            </Box>
         );
     }
 
     return (
-        <div
-            style={
-                {
-                    display: "inline-flexbox",
-                    backgroundColor: "#BCEAD5",
-                    maxWidth: "50vw",
-                    maxHeight: "80vh",
-                    padding: "10px",
-                    flexGrow: 1,
-                    alignSelf: "stretch"
-                }}
+        <Box
+            bg="#9ED5C5"
+            p={2.5}
+            maxW="50vw"
+            maxH="80vh"
+            flexGrow={1}
+            alignSelf="stretch"
         >
             <h1>TypeScript Output - input was not provided </h1>
             <h3>Please insert json</h3>
-        </div>
+        </Box>
     )
 }
 
