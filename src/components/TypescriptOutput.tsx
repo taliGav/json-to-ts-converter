@@ -1,122 +1,50 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Text, Heading } from "@chakra-ui/react";
+import { useWindowSize } from "react-use/lib";
+import Confetti from "react-confetti";
 
+function TypeScriptOutput(props: { interfaceResult: string }) {
 
-export {
-    jsonObjectToTypescriptInterface,
-    jsonToTypescript
-}
+  const { width, height } = useWindowSize();
 
-
-function TypeScriptOutput(props: { mainInterfaceName: string, updatedJsonInput: string }) {
-
-    if (props.mainInterfaceName && props.updatedJsonInput) {
-
-        return (
-            <Box
-                bg="#9ED5C5"
-                p={2.5}
-                maxW="50vw"
-                maxH="80vh"
-                flexGrow={1}
-                alignSelf="stretch"
-                className="Ts-output-container"
-            >
-                <h1>TypeScript Output - input provided</h1>
-                
-                <Box
-                    bg="#FFEFD6"
-                    mt={2.5}
-                    p={2.5}
-                    borderRadius={10}
-                >
-                    <p style={{ whiteSpace: 'pre-line', textAlign: 'left' }}>
-                        {jsonToTypescript(props.mainInterfaceName, props.updatedJsonInput)}
-                    </p>
-                </Box>
-            </Box>
-        );
-    }
+  if (props.interfaceResult) {
+    console.log("interfaceResult", props.interfaceResult);
 
     return (
-        <Box
-            bg="#9ED5C5"
-            p={2.5}
-            maxW="50vw"
-            maxH="80vh"
-            flexGrow={1}
-            alignSelf="stretch"
-        >
-            <h1>TypeScript Output - input was not provided </h1>
-            <h3>Please insert json</h3>
+      <Box
+        bg="#9ED5C5"
+        p={2.5}
+        maxW="50vw"
+        flexGrow={1}
+        alignSelf="stretch"
+        className="Ts-output-container"
+      >
+        <Confetti
+          width={width}
+          height={height}
+          recycle={false}
+          />
+
+        <Heading fontSize="xl">TypeScript Interface Output</Heading>
+
+        <Box bg="#FFEFD6" mt={2.5} p={2.5} borderRadius={10}>
+          <Text style={{ whiteSpace: "pre-line", textAlign: "left" }}>
+            {props.interfaceResult}
+          </Text>
         </Box>
-    )
+      </Box>
+    );
+  } else {
+    console.log("no result yet");
+    return (
+      <Box bg="#9ED5C5" p={2.5} maxW="50vw" flexGrow={1} alignSelf="stretch">
+        <Heading fontSize="xl">TypeScript Interface Output</Heading>
+        <Heading fontSize="lg" mt="8">
+          Input was not provided - Please insert json
+        </Heading>
+      </Box>
+    );
+  }
 }
+
 
 export default TypeScriptOutput;
-
-
-
-
-function jsonToTypescript(mainInterfaceName: string, input: string) {
-    const parsedJson = JSON.parse(input)
-    return jsonObjectToTypescriptInterface(mainInterfaceName, parsedJson)
-}
-
-
-
-function jsonObjectToTypescriptInterface(interfaceName: string, json: Record<string, unknown>): string {
-
-    const interfaces = [] as string[]
-    const rec = Object.entries(json).map(([key, val]) => {
-        if (isRecord(val)) {
-            return [key, val] as const
-        }
-        return [key, primitiveValueToTypescriptType(val)] as const
-    })
-
-    const str = `interface ${toPascalCase(interfaceName)} {
-        ${rec.reduce((_interface, [property, valType]) => {
-        if (isRecord(valType)) {
-            interfaces.push(jsonObjectToTypescriptInterface(property, valType))
-            return _interface + `${property}: ${toPascalCase(property)}\n`
-        }
-        return _interface + `${property}: ${valType}\n`
-    }, '')
-        }}\n`
-
-    console.log('str', str)
-    console.log('interfaces', interfaces)
-
-    return str + '\n' + interfaces.join('')
-}
-
-
-
-
-function isRecord(x: unknown): x is Record<string, unknown> {
-    return x !== null && typeof x === 'object' && !Array.isArray(x);
-}
-
-
-
-function primitiveValueToTypescriptType(val: unknown) {
-    switch (typeof val) {
-        case 'number':
-            return 'number'
-        case 'string':
-            return 'string'
-        case 'boolean':
-            return 'boolean';
-        case null:
-            return 'null'
-        case undefined:
-            return 'undefined'
-    }
-}
-
-
-
-function toPascalCase(name: string) {
-    return name.split(' ').reduce((acc, cur) => acc + cur.charAt(0).toUpperCase() + cur.slice(1).toLowerCase(), '')
-}
-
