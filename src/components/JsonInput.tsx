@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useRef, useState } from 'react';
-import { Box, Button, Input, Textarea } from '@chakra-ui/react';
+import { Box, Button, Input, Textarea, Heading } from '@chakra-ui/react';
 
 function JsonInput(props: {
     onSubmit: {
@@ -23,13 +23,12 @@ function JsonInput(props: {
             bg="#BCEAD5"
             p={2.5}
             maxW="50vw"
-            h="80vh"
             flexGrow={1}
             alignSelf="stretch"
         >
-            <h1>
+            <Heading fontSize="xl">
                 JSON input
-            </h1>
+            </Heading>
             <br />
             <Input type="text" name="interface-name" required
                 placeholder='Enter your interface name'
@@ -49,10 +48,6 @@ function JsonInput(props: {
                 onClick={() => { props.onSubmit(interfaceName.current, jsonInput.current) }}
             >
                 Convert JSON to TS</Button>
-            {/* <br /> */}
-            {/* {jsonInput.current} */}
-            {/* <br /> */}
-            {/* {typeof (jsonInput.current)} */}
         </Box >
     );
 }
