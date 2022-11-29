@@ -10,7 +10,7 @@ function App() {
 
 
   return (
-    <Flex className="App" bg="#FFEFD6" minH="83vh">
+    <Flex className="App" bg="#FFEFD6" minH="86vh">
 
       <JsonInput
         onSubmit={(x: string, y: string) => {
