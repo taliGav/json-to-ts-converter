@@ -5,7 +5,7 @@ function Footer() {
     return (
         <Box className="Footer"
             bg="#DEF5E5"
-            h="7vh"
+            h="6vh"
             py={3}
         >
             <Text
