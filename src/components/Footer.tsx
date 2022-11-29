@@ -1,17 +1,18 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 
 function Footer() {
 
     return (
         <Box className="Footer"
             bg="#DEF5E5"
-            h="10vh"
-            p={2.5}
+            h="7vh"
+            py={3}
         >
-            <h1>Footer</h1>
+            <Text
+                textAlign="center"
+            >© Tali's project </Text>
         </Box >
     );
-
 }
 
 export default Footer;
